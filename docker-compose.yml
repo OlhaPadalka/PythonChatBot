@@ -1,0 +1,23 @@
+services:
+  python_echo_bot:
+    container_name: python_echo_bot
+    image: python_echo_bot_image
+    build:
+      context: .
+    environment:
+      BOT-TOKEN: "${BOT_TOKEN}"
+    depends_on:
+      - bot_db
+  
+  bot_db:
+    container_name: postgres_container
+    image: postgres:15
+    volumes:
+      - postgres_data:/data/postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      PGDATA: /data/postgres
+
+volumes:
+  postgres_data:
